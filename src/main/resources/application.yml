@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: CodyService
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+    open-in-view: false
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql: trace
+    org.cody.codyservice: debug
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+categories:
+  data: "1:상의,2:아우터,3:바지,4:스니커즈,5:가방,6:모자,7:양말,8:액세서리" 
