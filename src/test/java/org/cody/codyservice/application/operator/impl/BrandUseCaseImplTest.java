@@ -78,18 +78,21 @@ public class BrandUseCaseImplTest {
         }
         
         @Test
-        @DisplayName("전체 브랜드 목록을 성공적으로 조회한다")
+        @DisplayName("전체 브랜드 목록을 조회할 수 있다")
         void getAllBrands_ShouldReturnAllBrands() {
             List<Brand> brands = Arrays.asList(
-                sampleBrand,
-                new Brand(2, "두 번째 브랜드", LocalDateTime.now(), LocalDateTime.now())
+                new Brand(1, "브랜드1", LocalDateTime.now(), LocalDateTime.now()),
+                new Brand(2, "브랜드2", LocalDateTime.now(), LocalDateTime.now())
             );
+            
             when(brandRepository.findAll()).thenReturn(brands);
             
-            List<Brand> result = getBrandsUseCase.getAllBrands();
+            List<Brand> result = getBrandsUseCase.getBrands();
             
             assertNotNull(result);
             assertEquals(2, result.size());
+            assertEquals("브랜드1", result.get(0).getName());
+            assertEquals("브랜드2", result.get(1).getName());
             
             verify(brandRepository, times(1)).findAll();
         }

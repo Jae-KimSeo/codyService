@@ -17,13 +17,9 @@ public class DeleteBrandUseCaseImpl implements DeleteBrandUseCase {
     
     @Override
     public void deleteBrand(Integer id) {
-        if (id == null) {
-            throw new IllegalArgumentException("브랜드 ID는 필수입니다.");
-        }
-        
         Brand brand = brandRepository.findById(id);
         if (brand == null) {
-            throw new BusinessException("삭제할 브랜드를 찾을 수 없습니다: " + id);
+            throw new BusinessException("브랜드를 찾을 수 없습니다: " + id);
         }
         
         brandRepository.deleteById(id);
