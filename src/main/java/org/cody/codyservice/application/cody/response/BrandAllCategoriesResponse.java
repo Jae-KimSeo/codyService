@@ -27,7 +27,11 @@ public class BrandAllCategoriesResponse {
         private Integer categoryId;
         private String categoryName;
         private BigDecimal lowestPrice;
-        private ProductView productView;
-        private boolean isLowestPriceInBrand;
+        private ProductView lowestPriceProduct;
+        private boolean hasProduct;
+        
+        public boolean isHasProduct() {
+            return hasProduct;
+        }
     }
 } 

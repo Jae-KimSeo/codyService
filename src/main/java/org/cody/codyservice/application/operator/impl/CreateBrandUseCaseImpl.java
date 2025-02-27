@@ -22,12 +22,12 @@ public class CreateBrandUseCaseImpl implements CreateBrandUseCase {
             throw new IllegalArgumentException("브랜드 이름은 필수입니다.");
         }
         
+        LocalDateTime now = LocalDateTime.now();
         if (brand.getCreatedAt() == null) {
-            brand.setCreatedAt(LocalDateTime.now());
+            brand.setCreatedAt(now);
         }
-        
         if (brand.getUpdatedAt() == null) {
-            brand.setUpdatedAt(LocalDateTime.now());
+            brand.setUpdatedAt(now);
         }
         
         return brandRepository.save(brand);

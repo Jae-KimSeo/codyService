@@ -16,5 +16,5 @@ public interface GetBrandsUseCase {
      * 모든 브랜드를 조회합니다.
      * @return 브랜드 목록
      */
-    List<Brand> getAllBrands();
+    List<Brand> getBrands();
 } 

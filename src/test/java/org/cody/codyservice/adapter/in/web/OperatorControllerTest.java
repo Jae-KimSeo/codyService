@@ -1,34 +1,33 @@
 package org.cody.codyservice.adapter.in.web;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
-import org.cody.codyservice.application.operator.CreateProductUseCase;
-import org.cody.codyservice.application.operator.DeleteProductUseCase;
-import org.cody.codyservice.application.operator.GetProductsUseCase;
-import org.cody.codyservice.application.operator.UpdateProductUseCase;
+import org.cody.codyservice.application.operator.*;
 import org.cody.codyservice.common.exception.BusinessException;
 import org.cody.codyservice.domain.operator.Brand;
 import org.cody.codyservice.domain.operator.Product;
 import org.cody.codyservice.domain.operator.repository.BrandRepository;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -44,15 +43,27 @@ public class OperatorControllerTest {
     
     @MockBean
     private UpdateProductUseCase updateProductUseCase;
-    
+
     @MockBean
     private DeleteProductUseCase deleteProductUseCase;
     
     @MockBean
     private GetProductsUseCase getProductsUseCase;
-    
+
     @MockBean
     private BrandRepository brandRepository;
+
+    @MockBean
+    private GetBrandsUseCase getBrandsUseCase;
+
+    @MockBean
+    private CreateBrandUseCase createBrandUseCase;
+
+    @MockBean
+    private UpdateBrandUseCase updateBrandUseCase;
+
+    @MockBean
+    private DeleteBrandUseCase deleteBrandUseCase;
     
     private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
     
@@ -167,5 +178,43 @@ public class OperatorControllerTest {
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.success").value(true))
                .andExpect(jsonPath("$.message").value("상품이 삭제되었습니다."));
+    }
+    
+    @Test
+    @DisplayName("모든 브랜드 목록을 조회할 수 있다")
+    void getAllBrands() throws Exception {
+        LocalDateTime now = LocalDateTime.now();
+        List<Brand> brands = Arrays.asList(
+            new Brand(1, "브랜드1", now, now),
+            new Brand(2, "브랜드2", now, now)
+        );
+
+        when(getBrandsUseCase.getBrands()).thenReturn(brands);
+
+        mockMvc.perform(get("/operator/brands")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success", is(true)))
+                .andExpect(jsonPath("$.data", hasSize(2)))
+                .andExpect(jsonPath("$.data[0].brandId", is(1)))
+                .andExpect(jsonPath("$.data[0].name", is("브랜드1")))
+                .andExpect(jsonPath("$.data[1].brandId", is(2)))
+                .andExpect(jsonPath("$.data[1].name", is("브랜드2")));
+    }
+    
+    @Test
+    @DisplayName("특정 브랜드를 ID로 조회할 수 있다")
+    void getBrandById() throws Exception {
+        LocalDateTime now = LocalDateTime.now();
+        Brand brand = new Brand(1, "테스트 브랜드", now, now);
+
+        when(getBrandsUseCase.getBrandById(1)).thenReturn(brand);
+
+        mockMvc.perform(get("/operator/brands/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success", is(true)))
+                .andExpect(jsonPath("$.data.brandId", is(1)))
+                .andExpect(jsonPath("$.data.name", is("테스트 브랜드")));
     }
 } 

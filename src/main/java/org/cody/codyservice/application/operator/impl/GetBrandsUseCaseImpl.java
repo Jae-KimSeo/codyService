@@ -31,7 +31,7 @@ public class GetBrandsUseCaseImpl implements GetBrandsUseCase {
     }
     
     @Override
-    public List<Brand> getAllBrands() {
+    public List<Brand> getBrands() {
         return brandRepository.findAll();
     }
 } 
