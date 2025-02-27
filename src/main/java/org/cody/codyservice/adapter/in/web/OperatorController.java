@@ -2,14 +2,17 @@ package org.cody.codyservice.adapter.in.web;
 
 import java.util.List;
 
+import org.cody.codyservice.application.operator.CreateBrandUseCase;
 import org.cody.codyservice.application.operator.CreateProductUseCase;
+import org.cody.codyservice.application.operator.DeleteBrandUseCase;
 import org.cody.codyservice.application.operator.DeleteProductUseCase;
+import org.cody.codyservice.application.operator.GetBrandsUseCase;
 import org.cody.codyservice.application.operator.GetProductsUseCase;
+import org.cody.codyservice.application.operator.UpdateBrandUseCase;
 import org.cody.codyservice.application.operator.UpdateProductUseCase;
 import org.cody.codyservice.common.ApiResponse;
 import org.cody.codyservice.domain.operator.Brand;
 import org.cody.codyservice.domain.operator.Product;
-import org.cody.codyservice.domain.operator.repository.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,19 +32,28 @@ public class OperatorController {
     private final UpdateProductUseCase updateProductUseCase;
     private final DeleteProductUseCase deleteProductUseCase;
     private final GetProductsUseCase getProductsUseCase;
-    private final BrandRepository brandRepository;
+    private final CreateBrandUseCase createBrandUseCase;
+    private final UpdateBrandUseCase updateBrandUseCase;
+    private final DeleteBrandUseCase deleteBrandUseCase;
+    private final GetBrandsUseCase getBrandsUseCase;
     
     @Autowired
     public OperatorController(CreateProductUseCase createProductUseCase,
                              UpdateProductUseCase updateProductUseCase,
                              DeleteProductUseCase deleteProductUseCase,
                              GetProductsUseCase getProductsUseCase,
-                             BrandRepository brandRepository) {
+                             CreateBrandUseCase createBrandUseCase,
+                             UpdateBrandUseCase updateBrandUseCase,
+                             DeleteBrandUseCase deleteBrandUseCase,
+                             GetBrandsUseCase getBrandsUseCase) {
         this.createProductUseCase = createProductUseCase;
         this.updateProductUseCase = updateProductUseCase;
         this.deleteProductUseCase = deleteProductUseCase;
         this.getProductsUseCase = getProductsUseCase;
-        this.brandRepository = brandRepository;
+        this.createBrandUseCase = createBrandUseCase;
+        this.updateBrandUseCase = updateBrandUseCase;
+        this.deleteBrandUseCase = deleteBrandUseCase;
+        this.getBrandsUseCase = getBrandsUseCase;
     }
     
     @GetMapping("/products/{id}")
@@ -74,27 +86,33 @@ public class OperatorController {
         return ResponseEntity.ok(new ApiResponse<>(true, "상품이 삭제되었습니다.", null));
     }
 
+    @GetMapping("/brands/{id}")
+    public ResponseEntity<ApiResponse<Brand>> getBrand(@PathVariable Integer id) {
+        Brand brand = getBrandsUseCase.getBrandById(id);
+        return ResponseEntity.ok(new ApiResponse<>(true, "브랜드 조회 성공", brand));
+    }
+    
+    @GetMapping("/brands")
+    public ResponseEntity<ApiResponse<List<Brand>>> getAllBrands() {
+        List<Brand> brands = getBrandsUseCase.getAllBrands();
+        return ResponseEntity.ok(new ApiResponse<>(true, "전체 브랜드 목록 조회 성공", brands));
+    }
+    
     @PostMapping("/brands")
     public ResponseEntity<ApiResponse<Brand>> createBrand(@RequestBody Brand brand) {
-        Brand createdBrand = brandRepository.save(brand);
+        Brand createdBrand = createBrandUseCase.createBrand(brand);
         return ResponseEntity.ok(new ApiResponse<>(true, "브랜드가 생성되었습니다.", createdBrand));
     }
     
     @PutMapping("/brands/{id}")
     public ResponseEntity<ApiResponse<Brand>> updateBrand(@PathVariable Integer id, @RequestBody Brand brand) {
-        Brand existingBrand = brandRepository.findById(id);
-        if (existingBrand == null) {
-            return ResponseEntity.badRequest().body(new ApiResponse<>(false, "브랜드를 찾을 수 없습니다: " + id, null));
-        }
-        
-        brand.setBrandId(id);
-        Brand updatedBrand = brandRepository.save(brand);
+        Brand updatedBrand = updateBrandUseCase.updateBrand(id, brand);
         return ResponseEntity.ok(new ApiResponse<>(true, "브랜드가 수정되었습니다.", updatedBrand));
     }
     
     @DeleteMapping("/brands/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteBrand(@PathVariable Integer id) {
-        brandRepository.deleteById(id);
+        deleteBrandUseCase.deleteBrand(id);
         return ResponseEntity.ok(new ApiResponse<>(true, "브랜드가 삭제되었습니다.", null));
     }
 } 
