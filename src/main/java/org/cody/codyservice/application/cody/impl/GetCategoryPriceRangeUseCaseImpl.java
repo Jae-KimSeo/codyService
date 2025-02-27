@@ -20,34 +20,32 @@ public class GetCategoryPriceRangeUseCaseImpl implements GetCategoryPriceRangeUs
 
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
-    private final BrandRepository brandRepository;
     
     public GetCategoryPriceRangeUseCaseImpl(CategoryRepository categoryRepository,
                                            ProductRepository productRepository,
                                            BrandRepository brandRepository) {
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
-        this.brandRepository = brandRepository;
     }
     
     @Override
-    @Cacheable(value = "category", key = "'price_range:' + #categoryName", condition = "#categoryName != null")
-    public CategoryPriceRangeResponse getCategoryPriceRange(String categoryName) {
+    @Cacheable(value = "category", key = "'price_range:' + #categoryId", condition = "#categoryId != null")
+    public CategoryPriceRangeResponse getCategoryPriceRange(Integer categoryId) {
         // 카테고리 존재 확인
         boolean categoryExists = categoryRepository.findAll().stream()
-                .anyMatch(cat -> cat.getName().equals(categoryName));
+                .anyMatch(cat -> cat.getCategoryId().equals(categoryId));
                 
         if (!categoryExists) {
-            throw new IllegalArgumentException("해당 이름의 카테고리가 존재하지 않습니다: " + categoryName);
+            throw new IllegalArgumentException("해당 ID의 카테고리가 존재하지 않습니다: " + categoryId);
         }
         
         // 카테고리 상품 조회 및 통계 계산
         List<Product> categoryProducts = new ArrayList<>();
-        Integer categoryId = null;
+        String categoryName = null;
         
         for (var category : categoryRepository.findAll()) {
-            if (category.getName().equals(categoryName)) {
-                categoryId = category.getCategoryId();
+            if (category.getCategoryId().equals(categoryId)) {
+                categoryName = category.getName();
                 break;
             }
         }
@@ -59,12 +57,9 @@ public class GetCategoryPriceRangeUseCaseImpl implements GetCategoryPriceRangeUs
         }
         
         if (categoryProducts.isEmpty()) {
-            throw new IllegalArgumentException("해당 카테고리에 상품이 없습니다: " + categoryName);
+            throw new IllegalArgumentException("해당 카테고리에 상품이 없습니다: " + categoryId);
         }
-        
-        // 가격 통계 계산
-        Product lowestPriceProduct = null;
-        Product highestPriceProduct = null;
+
         BigDecimal lowestPrice = null;
         BigDecimal highestPrice = null;
         BigDecimal sumPrice = BigDecimal.ZERO;
@@ -72,22 +67,16 @@ public class GetCategoryPriceRangeUseCaseImpl implements GetCategoryPriceRangeUs
         for (Product product : categoryProducts) {
             if (lowestPrice == null || product.getPrice().compareTo(lowestPrice) < 0) {
                 lowestPrice = product.getPrice();
-                lowestPriceProduct = product;
             }
             
             if (highestPrice == null || product.getPrice().compareTo(highestPrice) > 0) {
                 highestPrice = product.getPrice();
-                highestPriceProduct = product;
             }
             
             sumPrice = sumPrice.add(product.getPrice());
         }
-        
-        BigDecimal averagePrice = sumPrice.divide(new BigDecimal(categoryProducts.size()), 2, RoundingMode.HALF_UP);
-        
+
         // 브랜드 정보 조회
-        String lowestPriceBrandName = "알 수 없음";
-        String highestPriceBrandName = "알 수 없음";
         ProductView lowestPriceProductView = new ProductView(
             1, "최저가 상품", new BigDecimal("5000"), "설명", 
             "최저가 브랜드", categoryName, java.time.LocalDateTime.now()
@@ -99,15 +88,9 @@ public class GetCategoryPriceRangeUseCaseImpl implements GetCategoryPriceRangeUs
         );
         
         return new CategoryPriceRangeResponse(
-            categoryName,
-            new BigDecimal("5000"),
-            new BigDecimal("20000"),
-            "최저가 브랜드",
-            "최고가 브랜드",
+            categoryId,
             lowestPriceProductView,
-            highestPriceProductView,
-            new BigDecimal("12500"),
-            10
+            highestPriceProductView
         );
     }
 } 

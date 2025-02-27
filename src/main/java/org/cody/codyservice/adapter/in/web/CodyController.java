@@ -45,10 +45,10 @@ public class CodyController {
         return ResponseEntity.ok(new ApiResponse<>(true, "단일 브랜드의 모든 카테고리 최저가격 정보 조회 성공", response));
     }
     
-    @GetMapping("/categories/{categoryName}/price-range")
+    @GetMapping("/categories/{categoryId}/price-range")
     public ResponseEntity<ApiResponse<CategoryPriceRangeResponse>> getCategoryPriceRange(
-            @PathVariable String categoryName) {
-        CategoryPriceRangeResponse response = getCategoryPriceRangeUseCase.getCategoryPriceRange(categoryName);
+            @PathVariable Integer categoryId) {
+        CategoryPriceRangeResponse response = getCategoryPriceRangeUseCase.getCategoryPriceRange(categoryId);
         return ResponseEntity.ok(new ApiResponse<>(true, "카테고리별 가격 범위 및 통계 정보 조회 성공", response));
     }
 } 

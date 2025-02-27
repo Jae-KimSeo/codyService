@@ -1,8 +1,5 @@
 package org.cody.codyservice.application.cody.impl;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -16,11 +13,16 @@ import org.cody.codyservice.domain.operator.Product;
 import org.cody.codyservice.domain.operator.repository.BrandRepository;
 import org.cody.codyservice.domain.operator.repository.CategoryRepository;
 import org.cody.codyservice.domain.operator.repository.ProductRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -75,15 +77,13 @@ public class GetBrandPriceStatsUseCaseImplTest {
         
         List<CategoryPriceInfo> categoryInfos = response.getCategoryPriceInfos();
         assertEquals(2, categoryInfos.size());
-        
-        // 카테고리1 검증
+
         CategoryPriceInfo info1 = categoryInfos.get(0);
         assertEquals(1, info1.getCategoryId());
         assertEquals("카테고리1", info1.getCategoryName());
         assertEquals(new BigDecimal("5000"), info1.getLowestPrice());
         assertTrue(info1.isHasProduct());
-        
-        // 카테고리2 검증
+
         CategoryPriceInfo info2 = categoryInfos.get(1);
         assertEquals(2, info2.getCategoryId());
         assertEquals("카테고리2", info2.getCategoryName());

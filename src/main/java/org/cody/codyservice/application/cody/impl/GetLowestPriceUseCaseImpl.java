@@ -1,18 +1,15 @@
 package org.cody.codyservice.application.cody.impl;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.cody.codyservice.application.cody.GetLowestPriceUseCase;
 import org.cody.codyservice.application.cody.response.CategoryPriceResponse;
 import org.cody.codyservice.domain.cody.ProductView;
 import org.cody.codyservice.domain.operator.Category;
 import org.cody.codyservice.domain.operator.Product;
+import org.cody.codyservice.domain.operator.repository.BrandRepository;
 import org.cody.codyservice.domain.operator.repository.CategoryRepository;
 import org.cody.codyservice.domain.operator.repository.ProductRepository;
-import org.cody.codyservice.domain.operator.repository.BrandRepository;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
