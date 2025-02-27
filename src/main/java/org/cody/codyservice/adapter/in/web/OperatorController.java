@@ -1,16 +1,19 @@
 package org.cody.codyservice.adapter.in.web;
 
+import java.util.List;
+
 import org.cody.codyservice.application.operator.CreateProductUseCase;
 import org.cody.codyservice.application.operator.DeleteProductUseCase;
+import org.cody.codyservice.application.operator.GetProductsUseCase;
 import org.cody.codyservice.application.operator.UpdateProductUseCase;
 import org.cody.codyservice.common.ApiResponse;
 import org.cody.codyservice.domain.operator.Brand;
 import org.cody.codyservice.domain.operator.Product;
 import org.cody.codyservice.domain.operator.repository.BrandRepository;
-import org.cody.codyservice.domain.operator.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,17 +28,32 @@ public class OperatorController {
     private final CreateProductUseCase createProductUseCase;
     private final UpdateProductUseCase updateProductUseCase;
     private final DeleteProductUseCase deleteProductUseCase;
+    private final GetProductsUseCase getProductsUseCase;
     private final BrandRepository brandRepository;
     
     @Autowired
     public OperatorController(CreateProductUseCase createProductUseCase,
                              UpdateProductUseCase updateProductUseCase,
                              DeleteProductUseCase deleteProductUseCase,
+                             GetProductsUseCase getProductsUseCase,
                              BrandRepository brandRepository) {
         this.createProductUseCase = createProductUseCase;
         this.updateProductUseCase = updateProductUseCase;
         this.deleteProductUseCase = deleteProductUseCase;
+        this.getProductsUseCase = getProductsUseCase;
         this.brandRepository = brandRepository;
+    }
+    
+    @GetMapping("/products/{id}")
+    public ResponseEntity<ApiResponse<Product>> getProduct(@PathVariable Integer id) {
+        Product product = getProductsUseCase.getProductById(id);
+        return ResponseEntity.ok(new ApiResponse<>(true, "상품 조회 성공", product));
+    }
+
+    @GetMapping("/products")
+    public ResponseEntity<ApiResponse<List<Product>>> getAllProducts() {
+        List<Product> products = getProductsUseCase.getAllProducts();
+        return ResponseEntity.ok(new ApiResponse<>(true, "전체 상품 목록 조회 성공", products));
     }
     
     @PostMapping("/products")

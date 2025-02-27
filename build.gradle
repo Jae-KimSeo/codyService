@@ -28,3 +28,15 @@ dependencies {
 tasks.withType(JavaCompile) {
     options.compilerArgs << "-parameters"
 }
+
+test {
+    useJUnitPlatform()
+}
+
+sourceSets {
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+    }
+}
