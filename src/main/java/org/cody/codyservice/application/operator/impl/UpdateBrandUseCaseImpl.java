@@ -18,16 +18,17 @@ public class UpdateBrandUseCaseImpl implements UpdateBrandUseCase {
     }
     
     @Override
-    public Brand updateBrand(Integer id, Brand brandUpdate) {
+    public Brand updateBrand(Integer id, Brand updatedBrand) {
+        // Optional 대신 직접 null 체크
         Brand existingBrand = brandRepository.findById(id);
         if (existingBrand == null) {
             throw new BusinessException("브랜드를 찾을 수 없습니다: " + id);
         }
         
-        if (brandUpdate.getName() != null) {
-            existingBrand.setName(brandUpdate.getName());
-        }
+        // 업데이트할 필드 설정
+        existingBrand.setName(updatedBrand.getName());
         
+        // 수정 시간 업데이트
         existingBrand.setUpdatedAt(LocalDateTime.now());
         
         return brandRepository.save(existingBrand);

@@ -5,8 +5,8 @@ import java.util.List;
 import org.cody.codyservice.domain.operator.Brand;
 
 public interface BrandRepository {
-    Brand findById(Integer brandId);
+    Brand findById(Integer id);
     List<Brand> findAll();
     Brand save(Brand brand);
-    void deleteById(Integer brandId);
+    void deleteById(Integer id);
 } 

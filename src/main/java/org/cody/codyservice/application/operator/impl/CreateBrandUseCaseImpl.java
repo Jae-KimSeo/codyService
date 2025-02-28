@@ -23,12 +23,8 @@ public class CreateBrandUseCaseImpl implements CreateBrandUseCase {
         }
         
         LocalDateTime now = LocalDateTime.now();
-        if (brand.getCreatedAt() == null) {
-            brand.setCreatedAt(now);
-        }
-        if (brand.getUpdatedAt() == null) {
-            brand.setUpdatedAt(now);
-        }
+        brand.setCreatedAt(now);
+        brand.setUpdatedAt(now);
         
         return brandRepository.save(brand);
     }
