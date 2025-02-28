@@ -65,7 +65,7 @@ public class GetLowestPriceUseCaseImpl implements GetLowestPriceUseCase {
             lowestPriceProduct.getDescription(),
             brandName,
             category.getName(),
-            lowestPriceProduct.getCreatedAt()
+            null  // createdAt 필드를 null로 설정
         );
         
         return new CategoryPriceResponse(

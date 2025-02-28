@@ -42,6 +42,7 @@ public class CodyController {
     public ResponseEntity<ApiResponse<BrandAllCategoriesResponse>> getBrandLowestPriceForAllCategories(
             @PathVariable Integer brandId) {
         BrandAllCategoriesResponse response = getBrandPriceStatsUseCase.getBrandLowestPriceForAllCategories(brandId);
+        
         return ResponseEntity.ok(new ApiResponse<>(true, "단일 브랜드의 모든 카테고리 최저가격 정보 조회 성공", response));
     }
     

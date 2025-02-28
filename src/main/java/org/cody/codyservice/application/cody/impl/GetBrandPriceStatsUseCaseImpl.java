@@ -16,6 +16,7 @@ import org.cody.codyservice.domain.operator.repository.CategoryRepository;
 import org.cody.codyservice.domain.operator.repository.ProductRepository;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class GetBrandPriceStatsUseCaseImpl implements GetBrandPriceStatsUseCase {
@@ -24,6 +25,7 @@ public class GetBrandPriceStatsUseCaseImpl implements GetBrandPriceStatsUseCase 
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
     
+    @Autowired
     public GetBrandPriceStatsUseCaseImpl(BrandRepository brandRepository,
                                          CategoryRepository categoryRepository,
                                          ProductRepository productRepository) {
@@ -59,7 +61,7 @@ public class GetBrandPriceStatsUseCaseImpl implements GetBrandPriceStatsUseCase 
                     lowestPriceProduct.getDescription(),
                     brand.getName(),
                     category.getName(),
-                    lowestPriceProduct.getCreatedAt()
+                    null  // createdAt을 null로 설정
                 );
             }
             
