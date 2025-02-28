@@ -108,3 +108,96 @@ Body:
 - 설명: 기존 브랜드 정보를 업데이트합니다.
 - 예시 요청: http://localhost:8080/api/operator/brands/5
 Body:
+```
+{
+  "name": "나이키"
+}
+```
+
+예시 응답:
+```
+{
+  "success": true,
+  "message": "브랜드가 성공적으로 업데이트되었습니다.",
+  "data": {
+    "brandId": 5,
+    "name": "나이키"
+  }
+}
+```
+#### 2.3 상품 생성
+
+- URL: http://localhost:8080/api/operator/products
+- Method: POST
+- Content-Type: application/json
+- 설명: 새 상품을 생성합니다.
+
+예시 요청:
+http://localhost:8080/api/operator/products
+
+Body:
+```
+{
+  "productId": 21,
+  "name": "와펜 맨투맨",
+  "price": 350000,
+  "description": "고급 코튼 소재의 맨투맨",
+  "brandId": 5,
+  "categoryId": 1
+}
+```
+
+예시 응답:
+```
+{
+  "success": true,
+  "message": "상품이 성공적으로 생성되었습니다.",
+  "data": {
+    "productId": 21,
+    "name": "와펜 맨투맨",
+    "price": 350000,
+    "description": "고급 코튼 소재의 맨투맨",
+    "brandId": 5,
+    "categoryId": 1,
+    "createdAt": "2023-06-15T14:30:00"
+  }
+}
+```
+#### 2.4 모든 브랜드 조회
+
+- URL: http://localhost:8080/api/operator/brands
+- Method: GET
+- 설명: 등록된 모든 브랜드 정보를 조회합니다.
+
+예시 요청:
+http://localhost:8080/api/operator/brands
+
+예시 응답:
+```
+{
+  "success": true,
+  "message": "모든 브랜드 조회 성공",
+  "data": [
+    {
+      "brandId": 1,
+      "name": "나이키"
+    },
+    {
+      "brandId": 2,
+      "name": "아디다스"
+    },
+    {
+      "brandId": 3,
+      "name": "리바이스"
+    },
+    {
+      "brandId": 4,
+      "name": "유니클로"
+    },
+    {
+      "brandId": 5,
+      "name": "스톤아일랜드"
+    }
+  ]
+}
+```
