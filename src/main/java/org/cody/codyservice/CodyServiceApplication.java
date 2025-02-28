@@ -2,11 +2,11 @@ package org.cody.codyservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
-@EnableConfigurationProperties
-public class CodyServiceApplication {	
+@EnableCaching
+public class CodyServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CodyServiceApplication.class, args);

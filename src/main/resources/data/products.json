@@ -1,0 +1,194 @@
+[
+  {
+    "id": 1,
+    "name": "나이키 베이직 라운드 티셔츠",
+    "price": 39000,
+    "brandId": 1,
+    "categoryId": 1,
+    "description": "일상생활에 편안하게 착용할 수 있는 기본 티셔츠"
+  },
+  {
+    "id": 2,
+    "name": "나이키 경량 방풍 재킷",
+    "price": 89000,
+    "brandId": 1,
+    "categoryId": 2,
+    "description": "가벼운 소재로 제작된 방풍 기능이 우수한 재킷"
+  },
+  {
+    "id": 3,
+    "name": "나이키 스트레치 조거팬츠",
+    "price": 69000,
+    "brandId": 1,
+    "categoryId": 3,
+    "description": "신축성이 좋은 원단으로 활동성이 뛰어난 조거 팬츠"
+  },
+  {
+    "id": 4,
+    "name": "나이키 에어 쿠션 스니커즈",
+    "price": 129000,
+    "brandId": 1,
+    "categoryId": 4,
+    "description": "쿠셔닝이 뛰어나 장시간 착용해도 편안한 스니커즈"
+  },
+  {
+    "id": 5,
+    "name": "나이키 멀티포켓 백팩",
+    "price": 49000,
+    "brandId": 1,
+    "categoryId": 5,
+    "description": "다양한 수납공간으로 실용성이 뛰어난 백팩"
+  },
+  {
+    "id": 6,
+    "name": "나이키 UV 프로텍션 버킷햇",
+    "price": 35000,
+    "brandId": 1,
+    "categoryId": 6,
+    "description": "자외선 차단 기능이 있는 실용적인 버킷햇"
+  },
+  {
+    "id": 7,
+    "name": "나이키 쿠션 퍼포먼스 양말 세트",
+    "price": 15000,
+    "brandId": 1,
+    "categoryId": 7,
+    "description": "운동 시 착용하기 좋은 쿠션감 있는 양말 3켤레 세트"
+  },
+  {
+    "id": 8,
+    "name": "나이키 스포츠 손목 밴드",
+    "price": 19000,
+    "brandId": 1,
+    "categoryId": 8,
+    "description": "운동 중 땀을 흡수하는 기능성 손목 밴드"
+  },
+  {
+    "id": 9,
+    "name": "아디다스 스트라이프 로고 티셔츠",
+    "price": 45000,
+    "brandId": 2,
+    "categoryId": 1,
+    "description": "특유의 스트라이프 로고가 돋보이는 티셔츠"
+  },
+  {
+    "id": 10,
+    "name": "아디다스 방수 윈드브레이커",
+    "price": 99000,
+    "brandId": 2,
+    "categoryId": 2,
+    "description": "방풍 및 방수 기능을 갖춘 기능성 윈드브레이커"
+  },
+  {
+    "id": 11,
+    "name": "아디다스 사이드 라인 트랙 팬츠",
+    "price": 79000,
+    "brandId": 2,
+    "categoryId": 3,
+    "description": "측면 라인 디자인이 특징인 스포티한 트랙 팬츠"
+  },
+  {
+    "id": 12,
+    "name": "아디다스 부스트 기술 러닝화",
+    "price": 179000,
+    "brandId": 2,
+    "categoryId": 4,
+    "description": "특허받은 쿠셔닝 기술이 적용된 고급 러닝화"
+  },
+  {
+    "id": 13,
+    "name": "아디다스 대용량 더플백",
+    "price": 59000,
+    "brandId": 2,
+    "categoryId": 5,
+    "description": "넉넉한 수납공간과 내구성이 좋은 스포츠 더플백"
+  },
+  {
+    "id": 14,
+    "name": "아디다스 클래식 베이스볼 캡",
+    "price": 29000,
+    "brandId": 2,
+    "categoryId": 6,
+    "description": "통기성이 좋고 편안하게 착용할 수 있는 베이스볼 캡"
+  },
+  {
+    "id": 15,
+    "name": "아디다스 쿠션 앵클 양말 세트",
+    "price": 16000,
+    "brandId": 2,
+    "categoryId": 7,
+    "description": "발목을 편안하게 감싸주는 쿠션감 있는 양말 3켤레 세트"
+  },
+  {
+    "id": 16,
+    "name": "아디다스 디지털 스포츠 워치",
+    "price": 89000,
+    "brandId": 2,
+    "categoryId": 8,
+    "description": "스포츠 활동에 최적화된 다기능 디지털 시계"
+  },
+  {
+    "id": 17,
+    "name": "유니클로 기능성 쿨링 티셔츠",
+    "price": 19900,
+    "brandId": 3,
+    "categoryId": 1,
+    "description": "특수 원단으로 제작되어 체온 조절에 효과적인 티셔츠"
+  },
+  {
+    "id": 18,
+    "name": "유니클로 초경량 패딩 자켓",
+    "price": 79900,
+    "brandId": 3,
+    "categoryId": 2,
+    "description": "가볍지만 보온성이 뛰어난 혁신적인 패딩 자켓"
+  },
+  {
+    "id": 19,
+    "name": "유니클로 스트레치 슬랙스",
+    "price": 49900,
+    "brandId": 3,
+    "categoryId": 3,
+    "description": "비즈니스 캐주얼에 적합한 신축성 있는 슬랙스"
+  },
+  {
+    "id": 20,
+    "name": "유니클로 컴포트 캔버스 슈즈",
+    "price": 39900,
+    "brandId": 3,
+    "categoryId": 4,
+    "description": "편안한 착화감의 일상용 캔버스 신발"
+  },
+  {
+    "id": 21,
+    "name": "유니클로 미니멀 크로스백",
+    "price": 29900,
+    "brandId": 3,
+    "categoryId": 5,
+    "description": "심플한 디자인의 실용적인 크로스백"
+  },
+  {
+    "id": 22,
+    "name": "유니클로 와이드 브림 UV 햇",
+    "price": 19900,
+    "brandId": 3,
+    "categoryId": 6,
+    "description": "넓은 챙으로 자외선 차단 효과가 뛰어난 모자"
+  },
+  {
+    "id": 23,
+    "name": "유니클로 베이직 컬러 양말 세트",
+    "price": 9900,
+    "brandId": 3,
+    "categoryId": 7,
+    "description": "다양한 색상의 기본 양말 3켤레 세트"
+  },
+  {
+    "id": 24,
+    "name": "유니클로 경량 스카프",
+    "price": 24900,
+    "brandId": 3,
+    "categoryId": 8,
+    "description": "사계절 활용 가능한 가벼운 소재의 스카프"
+  }
+] 

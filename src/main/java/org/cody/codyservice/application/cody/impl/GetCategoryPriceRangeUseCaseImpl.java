@@ -20,16 +20,18 @@ public class GetCategoryPriceRangeUseCaseImpl implements GetCategoryPriceRangeUs
 
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
+    private final BrandRepository brandRepository;
     
     public GetCategoryPriceRangeUseCaseImpl(CategoryRepository categoryRepository,
                                            ProductRepository productRepository,
                                            BrandRepository brandRepository) {
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
+        this.brandRepository = brandRepository;
     }
     
     @Override
-    @Cacheable(value = "category", key = "'price_range:' + #categoryId", condition = "#categoryId != null")
+    @Cacheable(value = "category", key = "#categoryId + ':price_range'", condition = "#categoryId != null")
     public CategoryPriceRangeResponse getCategoryPriceRange(Integer categoryId) {
         // 카테고리 존재 확인
         boolean categoryExists = categoryRepository.findAll().stream()
@@ -64,13 +66,18 @@ public class GetCategoryPriceRangeUseCaseImpl implements GetCategoryPriceRangeUs
         BigDecimal highestPrice = null;
         BigDecimal sumPrice = BigDecimal.ZERO;
         
+        Product lowestPriceProduct = null;
+        Product highestPriceProduct = null;
+        
         for (Product product : categoryProducts) {
             if (lowestPrice == null || product.getPrice().compareTo(lowestPrice) < 0) {
                 lowestPrice = product.getPrice();
+                lowestPriceProduct = product;
             }
             
             if (highestPrice == null || product.getPrice().compareTo(highestPrice) > 0) {
                 highestPrice = product.getPrice();
+                highestPriceProduct = product;
             }
             
             sumPrice = sumPrice.add(product.getPrice());
@@ -78,13 +85,23 @@ public class GetCategoryPriceRangeUseCaseImpl implements GetCategoryPriceRangeUs
 
         // 브랜드 정보 조회
         ProductView lowestPriceProductView = new ProductView(
-            1, "최저가 상품", new BigDecimal("5000"), "설명", 
-            "최저가 브랜드", categoryName, java.time.LocalDateTime.now()
+            lowestPriceProduct.getProductId(),
+            lowestPriceProduct.getName(),
+            lowestPriceProduct.getPrice(),
+            lowestPriceProduct.getDescription(),
+            brandRepository.findById(lowestPriceProduct.getBrandId()).getName(),
+            categoryName,
+            null  // createdAt을 null로 설정
         );
         
         ProductView highestPriceProductView = new ProductView(
-            2, "최고가 상품", new BigDecimal("20000"), "설명", 
-            "최고가 브랜드", categoryName, java.time.LocalDateTime.now()
+            highestPriceProduct.getProductId(),
+            highestPriceProduct.getName(),
+            highestPriceProduct.getPrice(),
+            highestPriceProduct.getDescription(),
+            brandRepository.findById(highestPriceProduct.getBrandId()).getName(),
+            categoryName,
+            null  // createdAt을 null로 설정
         );
         
         return new CategoryPriceRangeResponse(

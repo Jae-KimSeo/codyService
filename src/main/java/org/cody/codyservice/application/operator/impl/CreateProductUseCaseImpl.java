@@ -5,6 +5,8 @@ import org.cody.codyservice.domain.operator.Product;
 import org.cody.codyservice.domain.operator.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class CreateProductUseCaseImpl implements CreateProductUseCase {
     
@@ -16,6 +18,11 @@ public class CreateProductUseCaseImpl implements CreateProductUseCase {
     
     @Override
     public Product createProduct(Product product) {
+        // 현재 시간 설정
+        LocalDateTime now = LocalDateTime.now();
+        product.setCreatedAt(now);
+        product.setUpdatedAt(now);
+        
         return productRepository.save(product);
     }
 } 
